@@ -1,28 +1,29 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class UserInput extends Component {
-  state = { name: "" };
-  updateName = (event) => {
-    this.setState({ name: event.target.value });
+const UserInput = ({ addName }) => {
+  const [name, setName] = useState("");
+  
+  const updateName = (event) => {
+    setName(event.target.value);
   };
-  handleSubmit = (event) => {
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.props.addName(this.state.name);
-    this.setState({ name: "" });
+    addName(name);
+    setName("");
   };
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Add a new name here..."
-          value={this.state.name}
-          onChange={this.updateName}
-        />
-        <input type="submit" value="Create Name Tag" />
-      </form>
-    );
-  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Add a new name here..."
+        value={name}
+        onChange={updateName}
+      />
+      <input type="submit" value="Create Name Tag" />
+    </form>
+  );
 }
 
 export default UserInput;
